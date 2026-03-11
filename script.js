@@ -4,11 +4,12 @@ const config = {
     deletingSpeed: 50,
     pauseTime: 2000,
     titles: [
-        "3D Artist",
-        "Motion Graphic Designer",
         "Graphic Designer",
+        "Motion Graphic Designer",
         "Video Editor",
-        "VFX Compositor"
+        "2D Animator",
+        "3D Artist",
+        "VFX Artist"
     ]
 };
 
@@ -178,20 +179,7 @@ function initSkillAnimation() {
     animateSkills(); // Check on initial load
 }
 
-// ===== Project Card Tilt Effect =====
-function initProjectCardEffects() {
-    const cards = document.querySelectorAll('.project-card');
-    
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-}
+
 
 // ===== Parallax Effect for Hero Orbs =====
 function initParallaxEffect() {
@@ -372,11 +360,11 @@ document.addEventListener('DOMContentLoaded', () => {
     addRevealClasses();
     initScrollReveal();
     initSkillAnimation();
-    initProjectCardEffects();
     initParallaxEffect();
     initLoadingAnimation();
     initStatsCounter();
     initIntersectionObserver();
+    initGallery();
     
     // Optional: Custom cursor (can be disabled if not needed)
     // initCustomCursor();
@@ -406,8 +394,196 @@ document.addEventListener('keydown', (e) => {
         if (navMenu.classList.contains('active')) {
             navMenu.classList.remove('active');
         }
+        closeLightbox();
     }
+    if (e.key === 'ArrowLeft') navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
 });
+
+// ===== Behance-Style Gallery System =====
+// Architecture: Cloudinary (images) + YouTube (videos) + Firebase Firestore (metadata)
+let firebaseDB = null;
+let allPortfolioWorks = [];
+let filteredWorks = [];
+let currentLightboxIndex = 0;
+let currentFilter = 'all';
+
+const categoryLabels = {
+    'graphic-design': 'Graphic Design',
+    'motion-graphics': 'Motion Graphics',
+    'video-editing': 'Video Editing',
+    '2d-animation': '2D Animation',
+    '3d-art': '3D Art',
+    'vfx': 'VFX'
+};
+
+function initGallery() {
+    // Initialize Firebase if configured
+    if (typeof firebaseConfig !== 'undefined' && firebaseConfig.apiKey) {
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            firebaseDB = firebase.firestore();
+        } catch (e) {
+            console.log('Firebase not configured yet');
+        }
+    }
+
+    // Attach filter tab click handlers
+    document.querySelectorAll('.work-filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.work-filter').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter');
+            renderGallery();
+        });
+    });
+
+    // Load works from Firebase
+    loadPortfolioWorks();
+}
+
+async function loadPortfolioWorks() {
+    const gallery = document.getElementById('worksGallery');
+
+    if (!firebaseDB) {
+        gallery.innerHTML = `
+            <div class="gallery-empty-state">
+                <div class="empty-icon">🎨</div>
+                <p>Portfolio setup pending — works will appear here once configured</p>
+                <a href="admin.html" class="admin-link">Open Admin Panel</a>
+            </div>`;
+        return;
+    }
+
+    try {
+        const snapshot = await firebaseDB.collection('works')
+            .orderBy('timestamp', 'desc')
+            .get();
+
+        allPortfolioWorks = [];
+        snapshot.forEach(doc => allPortfolioWorks.push({ id: doc.id, ...doc.data() }));
+
+        renderGallery();
+    } catch (e) {
+        console.error('Error loading portfolio works:', e);
+        gallery.innerHTML = `
+            <div class="gallery-empty-state">
+                <div class="empty-icon">⚠️</div>
+                <p>Could not load works. Check Firebase setup.</p>
+                <a href="admin.html" class="admin-link">Open Admin Panel</a>
+            </div>`;
+    }
+}
+
+function renderGallery() {
+    const gallery = document.getElementById('worksGallery');
+
+    filteredWorks = currentFilter === 'all'
+        ? allPortfolioWorks
+        : allPortfolioWorks.filter(w => w.category === currentFilter);
+
+    if (filteredWorks.length === 0) {
+        gallery.innerHTML = `
+            <div class="gallery-empty-state">
+                <div class="empty-icon">📭</div>
+                <p>No works uploaded yet${currentFilter !== 'all' ? ' for this category' : ''}</p>
+                <a href="admin.html" class="admin-link">Upload from Admin Panel</a>
+            </div>`;
+        return;
+    }
+
+    gallery.innerHTML = filteredWorks.map((work, index) => {
+        const isVideo = work.type === 'video';
+        const thumb = work.thumbnail || work.url;
+        const catLabel = categoryLabels[work.category] || work.category;
+
+        if (isVideo) {
+            return `
+                <div class="work-card reveal" onclick="openLightbox(${index})">
+                    <div class="work-card-media">
+                        <div class="yt-thumb-wrapper">
+                            <img src="${thumb}" alt="${work.title}" loading="lazy">
+                            <div class="yt-play-btn"></div>
+                        </div>
+                    </div>
+                    <span class="video-tag">VIDEO</span>
+                    <div class="work-card-overlay">
+                        <div class="work-card-title">${work.title}</div>
+                        <div class="work-card-category">${catLabel}</div>
+                    </div>
+                </div>`;
+        } else {
+            return `
+                <div class="work-card reveal" onclick="openLightbox(${index})">
+                    <div class="work-card-media">
+                        <img src="${thumb}" alt="${work.title}" loading="lazy">
+                    </div>
+                    <div class="work-card-overlay">
+                        <div class="work-card-title">${work.title}</div>
+                        <div class="work-card-category">${catLabel}</div>
+                    </div>
+                </div>`;
+        }
+    }).join('');
+
+    // Re-apply reveal animation to new cards
+    document.querySelectorAll('.work-card.reveal').forEach(card => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+        observer.observe(card);
+    });
+}
+
+function openLightbox(index) {
+    currentLightboxIndex = index;
+    const item = filteredWorks[index];
+    if (!item) return;
+
+    const lightbox = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    const video = document.getElementById('lightboxVideo');
+    const titleEl = document.getElementById('lightboxTitle');
+
+    if (item.type === 'video') {
+        img.style.display = 'none';
+        video.style.display = 'block';
+        video.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(item.url)}?autoplay=1&rel=0`;
+    } else {
+        video.style.display = 'none';
+        video.src = '';
+        img.style.display = 'block';
+        // Use full resolution for lightbox (remove Cloudinary transformations)
+        img.src = item.url;
+        img.alt = item.title;
+    }
+
+    titleEl.textContent = item.title;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const video = document.getElementById('lightboxVideo');
+    lightbox.classList.remove('active');
+    video.src = '';
+    document.body.style.overflow = '';
+}
+
+function navigateLightbox(direction) {
+    if (filteredWorks.length === 0) return;
+    currentLightboxIndex += direction;
+    if (currentLightboxIndex < 0) currentLightboxIndex = filteredWorks.length - 1;
+    if (currentLightboxIndex >= filteredWorks.length) currentLightboxIndex = 0;
+    openLightbox(currentLightboxIndex);
+}
 
 // ===== Console Message =====
 console.log(
