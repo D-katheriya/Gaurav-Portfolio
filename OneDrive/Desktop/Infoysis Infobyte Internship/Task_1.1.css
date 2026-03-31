@@ -1,0 +1,102 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    padding:20px 60px;
+    background:#020617;
+}
+
+header a{
+    color:white;
+    margin-left:20px;
+    text-decoration:none;
+}
+
+/* HERO */
+.hero{
+    display:flex;
+    align-items:center;
+    padding:80px 60px;
+    gap:50px;
+}
+
+.hero-text{
+    width:50%;
+}
+
+.hero-text h1{
+    font-size:45px;
+}
+
+.hero-text button{
+    margin-top:20px;
+    padding:12px 30px;
+    border:none;
+    background:#38bdf8;
+}
+
+.hero-img img{
+    width:350px;
+}
+
+/* FEATURES */
+.features{
+    display:flex;
+    justify-content:space-around;
+    padding:60px;
+}
+
+.card{
+    background:#020617;
+    padding:30px;
+    width:30%;
+    text-align:center;
+    border-radius:10px;
+}
+
+.card img{
+    width:60px;
+    margin-bottom:15px;
+}
+
+/* DEVICES */
+.devices{
+    text-align:center;
+    padding:60px;
+}
+
+.device-icons img{
+    width:60px;
+    margin:20px;
+}
+
+/* MAP */
+.map{
+    text-align:center;
+    padding:60px;
+    background:#020617;
+}
+
+.map img{
+    width:70%;
+    margin-top:30px;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:20px;
+    background:black;
+}

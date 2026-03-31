@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaurav Prajapati - 3D Artist & Motion Graphic Designer | Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 15, 35, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(255, 0, 110, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #ff006e;
+            text-shadow: 0 0 10px rgba(255, 0, 110, 0.6);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 0, 110, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(131, 56, 236, 0.1);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 110, 0.3));
+            letter-spacing: -1px;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            color: #c0c0c0;
+            margin-bottom: 2rem;
+            font-style: italic;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.3), 0 0 20px rgba(131, 56, 236, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 0, 110, 0.5), 0 0 30px rgba(131, 56, 236, 0.3);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Section */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(20, 20, 35, 0) 0%, rgba(25, 25, 45, 0.3) 50%, rgba(20, 20, 35, 0) 100%);
+            position: relative;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.2));
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+
+        .about-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #ff006e;
+        }
+
+        .about-content p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .info-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-label {
+            color: #ff006e;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 0, 110, 0.08);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 0, 110, 0.25);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-category:hover {
+            background: rgba(255, 0, 110, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.3), 0 0 20px rgba(131, 56, 236, 0.15);
+            border-color: rgba(255, 0, 110, 0.5);
+        }
+
+        .skill-category h4 {
+            color: #ff006e;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            color: #b0b0b0;
+        }
+
+        .skill-list li:before {
+            content: "▸ ";
+            color: #ff006e;
+            margin-right: 0.5rem;
+        }
+
+        /* Experience Section */
+        .experience-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .experience-item {
+            background: rgba(255, 0, 110, 0.08);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #ff006e;
+            border-top: 2px solid rgba(255, 0, 110, 0.3);
+            border-right: 2px solid rgba(255, 0, 110, 0.2);
+            border-bottom: 2px solid rgba(255, 0, 110, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .experience-item:hover {
+            background: rgba(255, 0, 110, 0.15);
+            transform: translateX(5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.25), 0 0 20px rgba(131, 56, 236, 0.15);
+            border-left: 4px solid #ff006e;
+            border-color: rgba(255, 0, 110, 0.5);
+        }
+
+        .experience-item h4 {
+            color: #ff006e;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-item .company {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-item .duration {
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .experience-item p {
+            color: #b0b0b0;
+            line-height: 1.7;
+        }
+
+        /* Education Section */
+        .education-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .education-item {
+            background: rgba(131, 56, 236, 0.08);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #8338ec;
+            border-top: 2px solid rgba(131, 56, 236, 0.3);
+            border-right: 2px solid rgba(131, 56, 236, 0.2);
+            border-bottom: 2px solid rgba(131, 56, 236, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .education-item:hover {
+            background: rgba(131, 56, 236, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(131, 56, 236, 0.25), 0 0 20px rgba(255, 0, 110, 0.15);
+        }
+
+        .education-item h4 {
+            color: #8338ec;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-item .institution {
+            color: #e0e0e0;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-item .year {
+            color: #ff006e;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-item {
+            padding: 1.5rem;
+            background: rgba(255, 0, 110, 0.08);
+            border-radius: 12px;
+            border: 2px solid rgba(255, 0, 110, 0.25);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 0, 110, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.3), 0 0 20px rgba(131, 56, 236, 0.15);
+            border-color: rgba(255, 0, 110, 0.5);
+        }
+
+        .contact-item a {
+            color: #ff006e;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #8338ec;
+        }
+
+        .contact-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(180deg, rgba(10, 14, 39, 0.95) 0%, rgba(15, 15, 30, 0.95) 100%);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 2px solid rgba(255, 0, 110, 0.2);
+            color: #c0c0c0;
+        }
+
+        /* Profile Image */
+        .profile-image {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 20px 65px rgba(255, 0, 110, 0.35), 0 0 50px rgba(131, 56, 236, 0.25);
+            animation: scaleIn 0.8s ease;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .stat-boxes-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            aspect-ratio: 1;
+            cursor: pointer;
+            group: "portfolio";
+            border: 2px solid rgba(255, 0, 110, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(131, 56, 236, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 0, 110, 0.25);
+            backdrop-filter: blur(5px);
+        }
+
+        .portfolio-item:hover {
+            border-color: rgba(255, 0, 110, 0.5);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.25), 0 0 20px rgba(131, 56, 236, 0.15);
+        }
+
+        .portfolio-item:hover .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.4), rgba(131, 56, 236, 0.4));
+            transform: scale(1.08);
+        }
+
+        .portfolio-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 14, 39, 0.95) 50%, rgba(10, 14, 39, 0.98) 100%);
+            padding: 2rem 1rem 1rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-label {
+            background: linear-gradient(180deg, transparent 0%, rgba(10, 14, 39, 0.99) 50%, rgb(10, 14, 39) 100%);
+        }
+
+        .portfolio-subcategory {
+            font-size: 0.8rem;
+            color: #b0b0b0;
+            margin-top: 0.3rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-subcategory {
+            opacity: 1;
+            color: #ff006e;
+        }
+
+        /* Category-specific colors */
+        /* Category-specific animated backgrounds */
+        .portfolio-item.cat-animation .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.15), rgba(255, 100, 150, 0.15)),
+                        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 0, 110, 0.1) 10px, rgba(255, 0, 110, 0.1) 20px);
+        }
+
+        .portfolio-item.cat-animation:hover .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.4), rgba(255, 100, 150, 0.4)),
+                        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 0, 110, 0.2) 10px, rgba(255, 0, 110, 0.2) 20px);
+        }
+
+        /* Motion Graphics - Smooth waves */
+        .portfolio-item.cat-graphics .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(131, 56, 236, 0.15), rgba(166, 100, 255, 0.15)),
+                        repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(131, 56, 236, 0.1) 15px, rgba(131, 56, 236, 0.1) 30px),
+                        repeating-linear-gradient(180deg, transparent, transparent 15px, rgba(166, 100, 255, 0.08) 15px, rgba(166, 100, 255, 0.08) 30px);
+        }
+
+        .portfolio-item.cat-graphics:hover .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(131, 56, 236, 0.4), rgba(166, 100, 255, 0.4)),
+                        repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(131, 56, 236, 0.2) 15px, rgba(131, 56, 236, 0.2) 30px),
+                        repeating-linear-gradient(180deg, transparent, transparent 15px, rgba(166, 100, 255, 0.15) 15px, rgba(166, 100, 255, 0.15) 30px);
+        }
+
+        /* Video Editing - Film strips */
+        .portfolio-item.cat-video .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(93, 180, 255, 0.15), rgba(100, 200, 255, 0.15)),
+                        linear-gradient(90deg, transparent 35%, rgba(93, 180, 255, 0.12) 35%, rgba(93, 180, 255, 0.12) 65%, transparent 65%),
+                        repeating-linear-gradient(180deg, transparent, transparent 18px, rgba(93, 180, 255, 0.12) 18px, rgba(93, 180, 255, 0.12) 24px);
+        }
+
+        .portfolio-item.cat-video:hover .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(93, 180, 255, 0.4), rgba(100, 200, 255, 0.4)),
+                        linear-gradient(90deg, transparent 35%, rgba(93, 180, 255, 0.25) 35%, rgba(93, 180, 255, 0.25) 65%, transparent 65%),
+                        repeating-linear-gradient(180deg, transparent, transparent 18px, rgba(93, 180, 255, 0.22) 18px, rgba(93, 180, 255, 0.22) 24px);
+        }
+
+        /* VFX - Particle effects */
+        .portfolio-item.cat-vfx .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(255, 200, 0, 0.15), rgba(255, 150, 0, 0.15)),
+                        radial-gradient(circle at 15% 25%, rgba(255, 200, 0, 0.15) 0%, transparent 18%),
+                        radial-gradient(circle at 85% 75%, rgba(255, 150, 0, 0.15) 0%, transparent 18%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 175, 0, 0.1) 0%, transparent 25%),
+                        radial-gradient(circle at 30% 70%, rgba(255, 150, 0, 0.08) 0%, transparent 15%),
+                        radial-gradient(circle at 70% 30%, rgba(255, 200, 0, 0.08) 0%, transparent 15%);
+        }
+
+        .portfolio-item.cat-vfx:hover .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(255, 200, 0, 0.4), rgba(255, 150, 0, 0.4)),
+                        radial-gradient(circle at 15% 25%, rgba(255, 200, 0, 0.3) 0%, transparent 18%),
+                        radial-gradient(circle at 85% 75%, rgba(255, 150, 0, 0.3) 0%, transparent 18%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 175, 0, 0.2) 0%, transparent 25%),
+                        radial-gradient(circle at 30% 70%, rgba(255, 150, 0, 0.15) 0%, transparent 15%),
+                        radial-gradient(circle at 70% 30%, rgba(255, 200, 0, 0.15) 0%, transparent 15%);
+        }
+
+        /* Brand Identity - Grid/geometric */
+        .portfolio-item.cat-brand .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(0, 255, 150, 0.15), rgba(100, 255, 200, 0.15)),
+                        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0, 255, 150, 0.1) 18px, rgba(0, 255, 150, 0.1) 20px),
+                        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0, 255, 150, 0.1) 18px, rgba(0, 255, 150, 0.1) 20px);
+        }
+
+        .portfolio-item.cat-brand:hover .portfolio-item-bg {
+            background: linear-gradient(135deg, rgba(0, 255, 150, 0.4), rgba(100, 255, 200, 0.4)),
+                        repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0, 255, 150, 0.18) 18px, rgba(0, 255, 150, 0.18) 20px),
+                        repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(0, 255, 150, 0.18) 18px, rgba(0, 255, 150, 0.18) 20px);
+        }
+
+        .portfolio-description {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .portfolio-icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .portfolio-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-title {
+            opacity: 1;
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 0, 110, 0.08);
+            border-radius: 12px;
+            border: 2px solid rgba(255, 0, 110, 0.25);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 0, 110, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.25), 0 0 20px rgba(131, 56, 236, 0.15);
+            border-color: rgba(255, 0, 110, 0.5);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-animate-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-animate-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-animate-up {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-animate-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Word Split Animation */
+        .word-split span {
+            display: inline-block;
+            opacity: 0;
+            animation: wordReveal 0.6s ease forwards;
+            margin-right: 0.1em;
+        }
+
+        @keyframes wordReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Line Draw Animation */
+        .line-draw {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .line-draw::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff006e, #8338ec);
+            animation: lineDrawOut 0.8s ease forwards;
+        }
+
+        @keyframes lineDrawOut {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Stagger Animation */
+        [data-stagger] {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        [data-stagger].visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+
+        /* Different delays for stagger effect */
+        [data-stagger="1"] { transition-delay: 0.1s; }
+        [data-stagger="2"] { transition-delay: 0.2s; }
+        [data-stagger="3"] { transition-delay: 0.3s; }
+        [data-stagger="4"] { transition-delay: 0.4s; }
+        [data-stagger="5"] { transition-delay: 0.5s; }
+        [data-stagger="6"] { transition-delay: 0.6s; }
+
+        /* Blur fade animation */
+        .blur-fade {
+            opacity: 0;
+            filter: blur(10px);
+            transition: all 1s ease 0.3s;
+        }
+
+        .blur-fade.visible {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        /* Pop Out Hover Effects */
+        h1, h2, h3, h4, p, a, li, .contact-label {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        h3:hover {
+            transform: scale(1.05);
+        }
+
+        p:hover {
+            transform: translateY(-2px);
+            color: #ff006e;
+        }
+
+        a:not(.cta-button):hover {
+            transform: scale(1.08);
+        }
+
+        li:hover {
+            transform: scale(1.08) translateX(5px);
+        }
+
+        .contact-label:hover {
+            transform: scale(1.1);
+            letter-spacing: 1px;
+        }
+
+        /* Enhanced CTA Button Pop */
+        .cta-button {
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.08) !important;
+            box-shadow: 0 20px 50px rgba(255, 0, 110, 0.6) !important;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.05) !important;
+        }
+
+        /* Card pop effects */
+        .skill-category:hover,
+        .experience-item:hover,
+        .portfolio-item:hover,
+        .contact-item:hover,
+        .stat-box:hover,
+        .education-item:hover {
+            transform: translateY(-12px) scale(1.05) !important;
+            box-shadow: 0 30px 60px rgba(255, 0, 110, 0.4) !important;
+        }
+
+        /* Profile image pop */
+        .profile-image:hover {
+            transform: scale(1.08) !important;
+            box-shadow: 0 40px 80px rgba(255, 0, 110, 0.5) !important;
+        }
+
+        /* Text selection pop effect */
+        ::selection {
+            background: rgba(255, 0, 110, 0.3);
+            color: #ff006e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">GP</div>
+        <ul>
+            <li><a href="#hero">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#skills">SKILLS</a></li>
+            <li><a href="#works">WORKS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>✨ Gaurav Prajapati ✨</h1>
+            <p class="tagline">"Transform Ideas Into Visual Reality"</p>
+            <p style="font-size: 1.2rem; color: #b0b0b0; margin-bottom: 2rem;">3D Artist | Motion Graphic Designer | Video Editor | Graphic Designer</p>
+            <a href="#contact" class="cta-button">Let's Create Together →</a>
+            <div class="scroll-down">✦ SCROLL DOWN ✦</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>ABOUT ME</h2>
+        <div class="about-container">
+            <div class="about-left">
+                <div class="profile-image scroll-scale">
+                    <img src="gaurav_profile.jpg" alt="Gaurav Prajapati">
+                </div>
+                <div class="stat-boxes-row">
+                    <div class="stat-box scroll-animate">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Years Exp.</div>
+                    </div>
+                    <div class="stat-box scroll-animate">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-content scroll-animate-right">
+                <h3>Gaurav Prajapati</h3>
+                <p>I am a certified Graphic Designer, Video Editor & 3D Animation Professional from Arena Animation Ghaziabad with expertise in creating compelling visual content across multiple disciplines.</p>
+                <p>Specializing in 3D modeling, motion graphics, video editing, and graphic design, I bring together technical expertise and creative vision to deliver outstanding results. Passionate about pushing the boundaries of visual storytelling.</p>
+                
+                <div class="info-item" data-stagger="1">
+                    <div class="info-label">📍 Location</div>
+                    <div class="info-value">Noida, Uttar Pradesh</div>
+                </div>
+                
+                <div class="info-item" data-stagger="2">
+                    <div class="info-label">✓ Availability</div>
+                    <div class="info-value">Available for Freelance & Full-time Projects</div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: #ff006e; margin-bottom: 1rem;">EDUCATION</h3>
+                    <div class="education-container">
+                        <div class="education-item scroll-animate-left" data-stagger="1">
+                            <h4>🎓 Diploma in Graphic & Motion Graphic</h4>
+                            <div class="institution">Arena Animation, Ghaziabad</div>
+                            <div class="year">Specialized in: Video Editing, 3D Animation</div>
+                        </div>
+                        <div class="education-item scroll-animate-left" data-stagger="2">
+                            <h4>🎓 Bachelor of Science</h4>
+                            <div class="institution">CSJMU University</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" style="background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);">
+        <h2>WORK EXPERIENCE</h2>
+        <div class="experience-container">
+            <div class="experience-item scroll-animate-left" style="animation-delay: 0.1s;">
+                <h4>🎨 Graphic & Motion Graphic Designer</h4>
+                <div class="company">Aaranyam</div>
+                <div class="duration">2022 - 2023</div>
+                <p>Worked as a Graphic & Motion Graphic Designer and Video Editor, creating visual content and animations for various projects.</p>
+            </div>
+
+            <div class="experience-item scroll-animate-left" style="animation-delay: 0.2s;">
+                <h4>👨‍🏫 Graphic Designer & Animation Faculty</h4>
+                <div class="company">Wisdom College for Creativity & Design</div>
+                <div class="duration">2023 - 2025</div>
+                <p>Served as a faculty member teaching graphic design and animation principles to students while continuing professional design work.</p>
+            </div>
+
+            <div class="experience-item scroll-animate-left" style="animation-delay: 0.3s;">
+                <h4>💼 Freelance Graphic Designer & Animation Faculty</h4>
+                <div class="company">Animeria Institute & Sikha Denge</div>
+                <div class="duration">2025 - Present</div>
+                <p>Providing freelance design services and faculty support for animation and graphic design courses.</p>
+            </div>
+
+            <div class="experience-item scroll-animate-left" style="animation-delay: 0.4s;">
+                <h4>🚀 Graphic Designer & Animation Faculty</h4>
+                <div class="company">MAAC Animation</div>
+                <div class="duration">Currently Pursuing</div>
+                <p>Actively working as a graphic designer and animation faculty with MAAC Animation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>SKILLS & EXPERTISE</h2>
+        <div class="skills-container">
+            <div class="skill-category scroll-animate" style="animation-delay: 0.1s;">
+                <h4>🎬 3D Animation & VFX</h4>
+                <ul class="skill-list">
+                    <li data-stagger="1">Maya</li>
+                    <li data-stagger="2">Substance Painter</li>
+                    <li data-stagger="3">ZBrush</li>
+                    <li data-stagger="4">Nuke</li>
+                    <li data-stagger="5">Silhouette</li>
+                    <li data-stagger="6">Modeling, Texturing, Lighting</li>
+                    <li>Rigging, Animation, Rendering</li>
+                </ul>
+            </div>
+
+            <div class="skill-category scroll-animate" style="animation-delay: 0.2s;">
+                <h4>🎞️ Motion Graphics & Video Editing</h4>
+                <ul class="skill-list">
+                    <li data-stagger="1">After Effects</li>
+                    <li data-stagger="2">Premiere Pro</li>
+                    <li data-stagger="3">Audition</li>
+                    <li data-stagger="4">Motion Graphic Design</li>
+                    <li data-stagger="5">Rotoscope & Tracking</li>
+                    <li data-stagger="6">Chroma Keying</li>
+                    <li>Compositing</li>
+                </ul>
+            </div>
+
+            <div class="skill-category scroll-animate" style="animation-delay: 0.3s;">
+                <h4>🎨 Graphic Design</h4>
+                <ul class="skill-list">
+                    <li data-stagger="1">Photoshop</li>
+                    <li data-stagger="2">Illustrator</li>
+                    <li data-stagger="3">CorelDRAW</li>
+                    <li data-stagger="4">InDesign</li>
+                    <li data-stagger="5">Logo Design</li>
+                    <li data-stagger="6">Typography</li>
+                    <li>Print & Package Design</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio/Works Section -->
+    <section id="works" style="background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2>WORKS</h2>
+            <p style="color: #b0b0b0; font-size: 1.1rem; margin-top: -1rem;">Creative Projects & Designs</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item cat-animation scroll-animate" style="animation-delay: 0.1s;">
+                <div class="portfolio-item-bg">
+                    <div class="portfolio-description">
+                        <span class="portfolio-icon">🎬</span>
+                        <span class="portfolio-title">3D Animation</span>
+                    </div>
+                </div>
+                <div class="portfolio-label">
+                    3D Animation
+                    <div class="portfolio-subcategory">Modeling & Rigging</div>
+                </div>
+            </div>
+            <div class="portfolio-item cat-graphics scroll-animate" style="animation-delay: 0.2s;">
+                <div class="portfolio-item-bg">
+                    <div class="portfolio-description">
+                        <span class="portfolio-icon">✨</span>
+                        <span class="portfolio-title">Motion Graphics</span>
+                    </div>
+                </div>
+                <div class="portfolio-label">
+                    Motion Graphics
+                    <div class="portfolio-subcategory">Animated Visuals</div>
+                </div>
+            </div>
+            <div class="portfolio-item cat-graphics scroll-animate" style="animation-delay: 0.3s;">
+                <div class="portfolio-item-bg">
+                    <div class="portfolio-description">
+                        <span class="portfolio-icon">🎨</span>
+                        <span class="portfolio-title">Graphic Design</span>
+                    </div>
+                </div>
+                <div class="portfolio-label">
+                    Graphic Design
+                    <div class="portfolio-subcategory">Print & Digital</div>
+                </div>
+            </div>
+            <div class="portfolio-item cat-video scroll-animate" style="animation-delay: 0.4s;">
+                <div class="portfolio-item-bg">
+                    <div class="portfolio-description">
+                        <span class="portfolio-icon">🎞️</span>
+                        <span class="portfolio-title">Video Editing</span>
+                    </div>
+                </div>
+                <div class="portfolio-label">
+                    Video Editing
+                    <div class="portfolio-subcategory">Post Production</div>
+                </div>
+            </div>
+            <div class="portfolio-item cat-vfx scroll-animate" style="animation-delay: 0.5s;">
+                <div class="portfolio-item-bg">
+                    <div class="portfolio-description">
+                        <span class="portfolio-icon">📐</span>
+                        <span class="portfolio-title">VFX & Compositing</span>
+                    </div>
+                </div>
+                <div class="portfolio-label">
+                    VFX & Compositing
+                    <div class="portfolio-subcategory">Effects & Color Grade</div>
+                </div>
+            </div>
+            <div class="portfolio-item cat-brand scroll-animate" style="animation-delay: 0.6s;">
+                <div class="portfolio-item-bg">
+                    <div class="portfolio-description">
+                        <span class="portfolio-icon">🎭</span>
+                        <span class="portfolio-title">Brand Identity</span>
+                    </div>
+                </div>
+                <div class="portfolio-label">
+                    Brand Identity
+                    <div class="portfolio-subcategory">Logo & Branding</div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="color: #b0b0b0; margin-bottom: 1rem; animation: fadeIn 1s ease 0.6s forwards; opacity: 0;">For complete portfolio:</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.behance.net/Creativeartline" target="_blank" class="cta-button scroll-animate" style="animation-delay: 0.7s;">View on Behance →</a>
+                <a href="https://www.artstation.com/gauravprajapati" target="_blank" class="cta-button scroll-animate" style="animation-delay: 0.8s;">View on ArtStation →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>LET'S CONNECT 🌟</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #b0b0b0; animation: fadeIn 1s ease 0.3s forwards; opacity: 0;">Have a project in mind? Let's create something amazing together.</p>
+        
+        <div class="contact-info">
+            <div class="contact-item scroll-animate" style="animation-delay: 0.1s;">
+                <div class="contact-label">📧 Email</div>
+                <a href="mailto:Gauravprajapati7196@gmail.com">Gauravprajapati7196@gmail.com</a>
+            </div>
+
+            <div class="contact-item scroll-animate" style="animation-delay: 0.2s;">
+                <div class="contact-label">📱 Phone</div>
+                <a href="tel:+919389329598">+91 9389329598</a>
+            </div>
+
+            <div class="contact-item scroll-animate" style="animation-delay: 0.3s;">
+                <div class="contact-label">🎨 Behance</div>
+                <a href="https://www.behance.net/Creativeartline" target="_blank">View My Portfolio</a>
+            </div>
+
+            <div class="contact-item scroll-animate" style="animation-delay: 0.4s;">
+                <div class="contact-label">🖼️ ArtStation</div>
+                <a href="https://www.artstation.com/gauravprajapati" target="_blank">View My Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Gaurav Prajapati. All rights reserved. | 3D Artist • Motion Graphic Designer • Video Editor</p>
+    </footer>
+
+    <script>
+        // ============ SCROLL ANIMATIONS ============
+        
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add visible class to trigger animation
+                    entry.target.classList.add('visible');
+
+                    // Stagger animations for child elements
+                    const staggerElements = entry.target.querySelectorAll('[data-stagger]');
+                    staggerElements.forEach(el => {
+                        el.classList.add('visible');
+                    });
+
+                    // Animate skill categories
+                    const skillCards = entry.target.querySelectorAll('.skill-category');
+                    skillCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, index * 150);
+                    });
+
+                    // Animate experience items
+                    const expItems = entry.target.querySelectorAll('.experience-item');
+                    expItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateX(0)';
+                        }, index * 150);
+                    });
+
+                    // Animate portfolio items
+                    const portfolioItems = entry.target.querySelectorAll('.portfolio-item');
+                    portfolioItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, index * 100);
+                    });
+
+                    // Animate contact items
+                    const contactItems = entry.target.querySelectorAll('.contact-item');
+                    contactItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    });
+
+                    // Don't re-observe
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-up, .scroll-scale, .blur-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ============ SMOOTH SCROLL ============
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ============ HERO ZOOM OUT & PARALLAX ============
+        const heroSection = document.querySelector('.hero');
+        const heroContent = document.querySelector('.hero-content');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const heroHeight = heroSection.offsetHeight;
+            const scrollPercent = Math.min(scrollTop / (heroHeight * 0.5), 1);
+            
+            // Zoom out effect
+            const scale = 1 - (scrollPercent * 0.3);
+            const opacity = 1 - (scrollPercent * 0.5);
+            
+            if (heroContent) {
+                heroContent.style.transform = `scale(${scale})`;
+                heroContent.style.opacity = opacity;
+            }
+
+            // Parallax background
+            if (heroSection) {
+                heroSection.style.backgroundPositionY = scrollTop * 0.5 + 'px';
+            }
+
+            // Parallax effect for elements
+            const parallaxElements = document.querySelectorAll('.hero::before, .hero::after');
+            parallaxElements.forEach((el, index) => {
+                const speed = (index + 1) * 0.3;
+                el.style.transform = `translateY(${scrollTop * speed}px)`;
+            });
+        });
+
+        // ============ COUNTER ANIMATION ============
+        function animateCounters() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const targets = [4, 50];
+            const duration = 1500;
+
+            statNumbers.forEach((element, index) => {
+                const target = targets[index];
+                const initialValue = parseInt(element.textContent) || 0;
+                const startTime = Date.now();
+
+                const animate = () => {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeOutQuad = 1 - Math.pow(1 - progress, 2);
+                    const current = Math.floor(target * easeOutQuad);
+                    
+                    element.textContent = current + (index === 0 ? '+' : '+');
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+
+                animate();
+            });
+        }
+
+        // Trigger counter when stats come into view
+        const statBoxes = document.querySelectorAll('.stat-box');
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statBoxes.forEach(box => statObserver.observe(box));
+
+        // ============ SCROLL PARALLAX FOR SECTIONS ============
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            
+            // Parallax for about section
+            const aboutSection = document.querySelector('#about');
+            if (aboutSection) {
+                const rect = aboutSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const offset = (window.innerHeight - rect.top) * 0.1;
+                    aboutSection.style.backgroundPosition = `0 ${offset}px`;
+                }
+            }
+
+            // Parallax for experience section
+            const expSection = document.querySelector('#experience');
+            if (expSection) {
+                const rect = expSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const offset = (window.innerHeight - rect.top) * 0.15;
+                    expSection.style.backgroundPosition = `0 ${offset}px`;
+                }
+            }
+        });
+
+        // ============ REVEAL ON SCROLL WITH STAGGER ============
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-up, .scroll-scale, .blur-fade');
+            
+            reveals.forEach((element, index) => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                    }, index * 50);
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll, { passive: true });
+        revealOnScroll(); // Initial call
+
+        // ============ SECTION HEADING ANIMATION ============
+        function animateSectionHeadings() {
+            const headings = document.querySelectorAll('section h2');
+            
+            headings.forEach(heading => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const words = entry.target.textContent.split(' ');
+                            entry.target.innerHTML = words.map((word, i) => {
+                                return `<span style="display: inline-block; opacity: 0; animation: wordReveal 0.6s ease ${i * 0.1}s forwards;">${word}</span>`;
+                            }).join(' ');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                observer.observe(heading);
+            });
+        }
+
+        animateSectionHeadings();
+
+        // ============ MOUSE PARALLAX FOR HERO ============
+        const heroBtn = document.querySelector('.cta-button');
+        if (heroBtn) {
+            document.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
+                heroBtn.style.transform = `translate(${moveX}px, ${moveY}px) translateY(-3px)`;
+            });
+
+            heroBtn.addEventListener('mouseleave', () => {
+                heroBtn.style.transform = 'translate(0, 0)';
+            });
+        }
+
+        // ============ SKILLS ITEM HOVER ANIMATION ============
+        const skillLists = document.querySelectorAll('.skill-list li');
+        skillLists.forEach((li, index) => {
+            li.style.setProperty('--index', index);
+            li.addEventListener('mouseenter', function() {
+                skillLists.forEach(item => {
+                    item.style.opacity = '0.4';
+                });
+                this.style.opacity = '1';
+                this.style.color = '#ff006e';
+            });
+
+            li.addEventListener('mouseleave', function() {
+                skillLists.forEach(item => {
+                    item.style.opacity = '1';
+                    item.style.color = '#b0b0b0';
+                });
+            });
+        });
+
+        // ============ SCROLL PROGRESS INDICATOR ============
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = window.scrollY;
+            const scrollPercent = (scrolled / windowHeight) * 100;
+            document.documentElement.style.setProperty('--scroll', scrollPercent);
+        });
+
+        // ============ ELEMENT PARALLAX ON SCROLL ============
+        const parallaxElements = document.querySelectorAll('[data-parallax]');
+        window.addEventListener('scroll', () => {
+            parallaxElements.forEach((el) => {
+                const speed = el.dataset.parallax || 0.5;
+                const rect = el.getBoundingClientRect();
+                const elementCenter = rect.top + rect.height / 2;
+                const windowCenter = window.innerHeight / 2;
+                const distance = elementCenter - windowCenter;
+                
+                el.style.transform = `translateY(${distance * speed * 0.1}px)`;
+            });
+        }, { passive: true });
+
+        // ============ SCROLL POSITION TRACKER ============
+        window.addEventListener('scroll', () => {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.documentElement.style.setProperty('--scroll-percent', scrollPercent);
+        }, { passive: true });
+    </script>
+</body>
+</html>
