@@ -13,6 +13,8 @@ const config = {
     ]
 };
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ===== Typing Effect =====
 class TypeWriter {
     constructor(element, texts, typingSpeed, deletingSpeed, pauseTime) {
@@ -184,19 +186,34 @@ function initSkillAnimation() {
 // ===== Parallax Effect for Hero Orbs =====
 function initParallaxEffect() {
     const orbs = document.querySelectorAll('.gradient-orb');
-    
+
+    if (prefersReducedMotion || orbs.length === 0) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
     window.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
-        
+        targetX = (e.clientX / window.innerWidth) - 0.5;
+        targetY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
+    const animate = () => {
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+
         orbs.forEach((orb, index) => {
             const speed = (index + 1) * 20;
-            const x = (mouseX - 0.5) * speed;
-            const y = (mouseY - 0.5) * speed;
-            
+            const x = currentX * speed;
+            const y = currentY * speed;
             orb.style.transform = `translate(${x}px, ${y}px)`;
         });
-    });
+
+        requestAnimationFrame(animate);
+    };
+
+    animate();
 }
 
 // ===== Add Reveal Classes to Elements =====
@@ -274,48 +291,96 @@ function initStatsCounter() {
 
 // ===== Cursor Effect (Optional Enhancement) =====
 function initCustomCursor() {
-    // Only enable on desktop
-    if (window.innerWidth > 768) {
-        const cursor = document.createElement('div');
-        cursor.className = 'custom-cursor';
-        document.body.appendChild(cursor);
-        
-        const cursorDot = document.createElement('div');
-        cursorDot.className = 'cursor-dot';
-        document.body.appendChild(cursorDot);
-        
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-        let dotX = 0, dotY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dotX = e.clientX;
-            dotY = e.clientY;
-        });
-        
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.1;
-            cursorY += (mouseY - cursorY) * 0.1;
-            
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            cursorDot.style.left = dotX + 'px';
-            cursorDot.style.top = dotY + 'px';
-            
-            requestAnimationFrame(animateCursor);
+    if (window.innerWidth <= 768 || prefersReducedMotion) return;
+
+    document.body.classList.add('cursor-enabled');
+
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    const cursorDot = document.createElement('div');
+    cursorDot.className = 'cursor-dot';
+    document.body.appendChild(cursorDot);
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+
+    let trailTick = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        trailTick += 1;
+        if (trailTick % 3 === 0) {
+            const trail = document.createElement('span');
+            trail.className = 'cursor-trail';
+            trail.style.left = `${mouseX}px`;
+            trail.style.top = `${mouseY}px`;
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), 650);
         }
-        
-        animateCursor();
-        
-        // Add hover effect
-        const interactiveElements = document.querySelectorAll('a, button, .btn, .project-card');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    const animateCursor = () => {
+        cursorX += (mouseX - cursorX) * 0.18;
+        cursorY += (mouseY - cursorY) * 0.18;
+
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+
+        requestAnimationFrame(animateCursor);
+    };
+
+    animateCursor();
+
+    const interactiveElements = document.querySelectorAll('a, button, .btn, .work-card, .tool-card, .social-icon, .work-filter');
+    interactiveElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+}
+
+function initScrollProgress() {
+    const progressWrap = document.createElement('div');
+    progressWrap.className = 'scroll-progress';
+    progressWrap.innerHTML = '<div class="scroll-progress-bar" id="scrollProgressBar"></div>';
+    document.body.appendChild(progressWrap);
+
+    const bar = document.getElementById('scrollProgressBar');
+    const updateProgress = () => {
+        const scrollTop = window.scrollY;
+        const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = pageHeight > 0 ? (scrollTop / pageHeight) * 100 : 0;
+        bar.style.width = `${Math.min(100, Math.max(0, progress)).toFixed(2)}%`;
+    };
+
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+}
+
+function initCardTilt() {
+    if (window.innerWidth <= 768 || prefersReducedMotion) return;
+
+    const tiltCards = document.querySelectorAll('.work-card, .tool-card, .stat-card, .timeline-content');
+    tiltCards.forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const px = (e.clientX - rect.left) / rect.width;
+            const py = (e.clientY - rect.top) / rect.height;
+            const rotateY = (px - 0.5) * 8;
+            const rotateX = (0.5 - py) * 8;
+            card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
         });
-    }
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
 }
 
 // ===== Intersection Observer for Performance =====
@@ -365,9 +430,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initStatsCounter();
     initIntersectionObserver();
     initGallery();
-    
-    // Optional: Custom cursor (can be disabled if not needed)
-    // initCustomCursor();
+    initCustomCursor();
+    initScrollProgress();
+    initCardTilt();
     
     console.log('Portfolio initialized successfully! 🚀');
 });
@@ -514,6 +579,18 @@ function renderGallery() {
                         <div class="work-card-category">${catLabel}</div>
                     </div>
                 </div>`;
+        } else if (work.type === 'model3d') {
+            return `
+                <div class="work-card reveal" onclick="openLightbox(${index})">
+                    <div class="work-card-media">
+                        <img src="${thumb}" alt="${work.title}" loading="lazy">
+                    </div>
+                    <span class="model-badge">3D MODEL</span>
+                    <div class="work-card-overlay">
+                        <div class="work-card-title">${work.title}</div>
+                        <div class="work-card-category">${catLabel}</div>
+                    </div>
+                </div>`;
         } else {
             return `
                 <div class="work-card reveal" onclick="openLightbox(${index})">
@@ -549,15 +626,46 @@ function openLightbox(index) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightboxImg');
     const video = document.getElementById('lightboxVideo');
+    const model = document.getElementById('lightboxModel');
     const titleEl = document.getElementById('lightboxTitle');
+    const lightboxContent = document.getElementById('lightboxContent');
+
+    let hint = document.getElementById('lightboxHint');
+    if (!hint) {
+        hint = document.createElement('div');
+        hint.id = 'lightboxHint';
+        hint.className = 'lightbox-hint hide';
+        hint.textContent = 'Drag to rotate | Scroll to zoom';
+        lightboxContent.appendChild(hint);
+    }
 
     if (item.type === 'video') {
         img.style.display = 'none';
         video.style.display = 'block';
+        model.style.display = 'none';
+        model.removeAttribute('src');
+        model.removeAttribute('poster');
+        hint.classList.add('hide');
         video.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(item.url)}?autoplay=1&rel=0`;
+    } else if (item.type === 'model3d') {
+        img.style.display = 'none';
+        video.style.display = 'none';
+        video.src = '';
+        model.style.display = 'block';
+        model.setAttribute('src', item.url);
+        if (item.thumbnail) {
+            model.setAttribute('poster', item.thumbnail);
+        } else {
+            model.removeAttribute('poster');
+        }
+        hint.classList.remove('hide');
     } else {
         video.style.display = 'none';
         video.src = '';
+        model.style.display = 'none';
+        model.removeAttribute('src');
+        model.removeAttribute('poster');
+        hint.classList.add('hide');
         img.style.display = 'block';
         // Use full resolution for lightbox (remove Cloudinary transformations)
         img.src = item.url;
@@ -572,8 +680,16 @@ function openLightbox(index) {
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     const video = document.getElementById('lightboxVideo');
+    const model = document.getElementById('lightboxModel');
+    const hint = document.getElementById('lightboxHint');
     lightbox.classList.remove('active');
     video.src = '';
+    if (model) {
+        model.removeAttribute('src');
+        model.removeAttribute('poster');
+        model.style.display = 'none';
+    }
+    if (hint) hint.classList.add('hide');
     document.body.style.overflow = '';
 }
 

@@ -11,6 +11,7 @@
     <!-- Firebase CDN (only App + Firestore, no Storage needed) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -33,6 +34,7 @@
             font-size: 1.5rem;
             background: linear-gradient(135deg, #ff8a00, #ffd166);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .admin-header-actions { display: flex; gap: 0.5rem; align-items: center; }
@@ -79,6 +81,7 @@
             margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #ff8a00, #ffd166);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .login-box p { color: #b8b8c4; margin-bottom: 2rem; }
@@ -136,6 +139,11 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
+        }
+
+        .upload-tabs.model-mode .upload-tab {
+            font-size: 0.88rem;
+            padding: 0.8rem 0.4rem;
         }
         .upload-tab:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.15); }
         .upload-tab.active {
@@ -233,6 +241,13 @@
             height: 200px;
             border-radius: 8px;
             border: none;
+        }
+        .upload-preview model-viewer {
+            width: 100%;
+            height: 220px;
+            border-radius: 8px;
+            background: radial-gradient(circle at center, rgba(255, 138, 0, 0.14), rgba(0, 0, 0, 0.92) 70%);
+            border: 1px solid rgba(255,255,255,0.15);
         }
         .file-name {
             color: #b8b8c4;
@@ -490,6 +505,10 @@
                     <span class="stat-num" id="videoCount">0</span>
                     <span class="stat-lbl">Videos</span>
                 </div>
+                <div class="stat-chip">
+                    <span class="stat-num" id="modelCount">0</span>
+                    <span class="stat-lbl">3D Models</span>
+                </div>
             </div>
 
             <div class="admin-grid">
@@ -501,6 +520,7 @@
                     <div class="upload-tabs">
                         <button class="upload-tab active" onclick="switchTab('image', this)">🖼️ Upload Image</button>
                         <button class="upload-tab" onclick="switchTab('video', this)">🎬 Add YouTube Video</button>
+                        <button class="upload-tab" onclick="switchTab('model', this)">🧊 Add 3D Model</button>
                     </div>
 
                     <!-- Common Fields -->
@@ -539,6 +559,20 @@
                             <label>YouTube Video URL</label>
                             <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." oninput="previewYouTube()">
                             <p class="form-hint">YouTube pe video upload karo (Unlisted recommended) → URL yahan paste karo</p>
+                        </div>
+                    </div>
+
+                    <!-- 3D Model URL Tab -->
+                    <div class="tab-content" id="tabModel">
+                        <div class="form-group">
+                            <label>3D Model URL (GLB/GLTF/USDZ)</label>
+                            <input type="url" id="modelUrl" placeholder="https://.../model.glb" oninput="previewModel3D()">
+                            <p class="form-hint">Best format: GLB. Aap Google Drive direct link ke bajay public CDN link use karo.</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Poster Image URL (optional)</label>
+                            <input type="url" id="modelPosterUrl" placeholder="https://.../poster.jpg" oninput="previewModel3D()">
+                            <p class="form-hint">Poster diya to gallery me thumbnail better dikhega.</p>
                         </div>
                     </div>
 
@@ -590,8 +624,10 @@
             currentTab = tab;
             document.querySelectorAll('.upload-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
+            document.querySelector('.upload-tabs').classList.toggle('model-mode', tab === 'model');
             document.getElementById('tabImage').classList.toggle('active', tab === 'image');
             document.getElementById('tabVideo').classList.toggle('active', tab === 'video');
+            document.getElementById('tabModel').classList.toggle('active', tab === 'model');
             // Reset preview
             document.getElementById('uploadPreview').style.display = 'none';
             document.getElementById('uploadPreview').innerHTML = '';
@@ -625,6 +661,26 @@
                 preview.style.display = 'none';
                 preview.innerHTML = '';
             }
+        }
+
+        function isValidModelUrl(url) {
+            return /\.(glb|gltf|usdz)(\?.*)?$/i.test(url || '');
+        }
+
+        function previewModel3D() {
+            const modelUrl = document.getElementById('modelUrl').value.trim();
+            const posterUrl = document.getElementById('modelPosterUrl').value.trim();
+            const preview = document.getElementById('uploadPreview');
+
+            if (!modelUrl || !isValidModelUrl(modelUrl)) {
+                preview.style.display = 'none';
+                preview.innerHTML = '';
+                return;
+            }
+
+            const posterAttr = posterUrl ? ` poster="${posterUrl}"` : '';
+            preview.innerHTML = `<model-viewer src="${modelUrl}"${posterAttr} camera-controls auto-rotate interaction-prompt="none"></model-viewer>`;
+            preview.style.display = 'block';
         }
 
         // Init Firebase (Firestore only, no Storage)
@@ -808,7 +864,7 @@
                 document.getElementById('progressContainer').style.display = 'none';
                 document.getElementById('progressFill').style.width = '0%';
 
-            } else {
+            } else if (currentTab === 'video') {
                 // YouTube video
                 const videoUrl = document.getElementById('videoUrl').value.trim();
                 const videoId = extractYouTubeId(videoUrl);
@@ -838,6 +894,36 @@
 
                 btn.disabled = false;
                 btn.textContent = 'Add Work';
+            } else {
+                const modelUrl = document.getElementById('modelUrl').value.trim();
+                const modelPosterUrl = document.getElementById('modelPosterUrl').value.trim();
+
+                if (!modelUrl || !isValidModelUrl(modelUrl)) {
+                    showStatus('Valid 3D model URL daalo (GLB/GLTF/USDZ).', 'error');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Saving...';
+
+                try {
+                    await db.collection('works').add({
+                        category: category,
+                        title: title,
+                        type: 'model3d',
+                        url: modelUrl,
+                        thumbnail: modelPosterUrl || 'https://dummyimage.com/900x900/111827/f59e0b&text=3D+Model',
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showStatus('3D model added successfully!', 'success');
+                    resetForm();
+                    loadAllWorks();
+                } catch (e) {
+                    showStatus('Failed: ' + e.message, 'error');
+                }
+
+                btn.disabled = false;
+                btn.textContent = 'Add Work';
             }
         }
 
@@ -848,6 +934,8 @@
             document.getElementById('uploadPreview').innerHTML = '';
             document.getElementById('fileName').style.display = 'none';
             document.getElementById('videoUrl') && (document.getElementById('videoUrl').value = '');
+            document.getElementById('modelUrl') && (document.getElementById('modelUrl').value = '');
+            document.getElementById('modelPosterUrl') && (document.getElementById('modelPosterUrl').value = '');
             fileInput.value = '';
         }
 
@@ -869,6 +957,7 @@
             document.getElementById('totalCount').textContent = allWorks.length;
             document.getElementById('imageCount').textContent = allWorks.filter(w => w.type === 'image').length;
             document.getElementById('videoCount').textContent = allWorks.filter(w => w.type === 'video').length;
+            document.getElementById('modelCount').textContent = allWorks.filter(w => w.type === 'model3d').length;
         }
 
         function renderWorks(works) {
@@ -880,11 +969,13 @@
             list.innerHTML = works.map(w => {
                 const thumb = w.thumbnail || w.url;
                 const isVideo = w.type === 'video';
+                const isModel = w.type === 'model3d';
                 const openUrl = isVideo ? `https://www.youtube.com/watch?v=${encodeURIComponent(w.url)}` : w.url;
                 return `
                 <div class="work-item" onclick="window.open('${openUrl}', '_blank')">
                     <img src="${thumb}" alt="${w.title}" loading="lazy">
                     ${isVideo ? '<span class="video-badge">▶ YouTube</span>' : ''}
+                    ${isModel ? '<span class="video-badge">3D</span>' : ''}
                     <div class="work-item-overlay">
                         <div class="work-item-title">${w.title}</div>
                         <div class="work-item-category">${getCategoryLabel(w.category)}</div>
