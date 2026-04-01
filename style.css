@@ -35,6 +35,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 body.cursor-enabled {
@@ -84,7 +85,7 @@ body.cursor-enabled .work-filter {
     height: 32px;
     border: 1.5px solid rgba(255, 209, 102, 0.8);
     border-radius: 50%;
-    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition: width 0.15s ease, height 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     mix-blend-mode: screen;
 }
 
@@ -108,7 +109,7 @@ body.cursor-enabled .work-filter {
     height: 7px;
     border-radius: 50%;
     background: rgba(255, 138, 0, 0.55);
-    animation: fadeTrail 0.7s ease-out forwards;
+    animation: fadeTrail 0.54s ease-out forwards;
 }
 
 @keyframes fadeTrail {
@@ -140,6 +141,7 @@ body.cursor-enabled .work-filter {
 .navbar.scrolled {
     background: rgba(26, 26, 31, 0.95);
     box-shadow: var(--shadow);
+    border-bottom-color: rgba(255, 138, 0, 0.26);
 }
 
 .nav-container {
@@ -430,6 +432,37 @@ body.cursor-enabled .work-filter {
 section {
     padding: 100px 20px;
     position: relative;
+    isolation: isolate;
+    transition: filter 0.45s ease;
+}
+
+section::before,
+section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+section::before {
+    background: radial-gradient(circle at 20% 15%, rgba(255, 186, 84, 0.14), rgba(0, 0, 0, 0) 46%);
+}
+
+section::after {
+    background: linear-gradient(140deg, rgba(255, 138, 0, 0.12), rgba(255, 90, 42, 0.05) 42%, rgba(255, 255, 255, 0.01) 100%);
+}
+
+section.section-in-view {
+    transform: none;
+    filter: saturate(1.08);
+}
+
+section.section-in-view::before,
+section.section-in-view::after {
+    opacity: 1;
 }
 
 .section-header {
@@ -461,7 +494,10 @@ section {
 
 /* ===== About Section ===== */
 .about {
-    background: var(--bg-darker);
+    background:
+        radial-gradient(circle at 14% 10%, rgba(255, 138, 0, 0.16), transparent 38%),
+        radial-gradient(circle at 90% 85%, rgba(255, 90, 42, 0.12), transparent 35%),
+        var(--bg-darker);
 }
 
 .about-content {
@@ -586,8 +622,14 @@ section {
     justify-content: center;
     gap: 0.6rem;
     margin-bottom: 3rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding: 0 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.work-filters::-webkit-scrollbar {
+    display: none;
 }
 
 .work-filter {
@@ -601,6 +643,7 @@ section {
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    flex: 0 0 auto;
 }
 
 .work-filter:hover {
@@ -773,9 +816,187 @@ section {
     color: #fff;
 }
 
+.work-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.work-drive-media {
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(140deg, rgba(255, 138, 0, 0.35), rgba(255, 209, 102, 0.2));
+}
+
+.work-drive-icon {
+    font-size: 3rem;
+}
+
+.work-card-overlay-visible {
+    opacity: 1;
+}
+
+.section-target-pulse {
+    animation: targetPulse 0.9s ease-out;
+}
+
+@keyframes targetPulse {
+    0% {
+        transform: scale(0.985);
+        filter: brightness(1);
+    }
+    45% {
+        transform: scale(1.01);
+        filter: brightness(1.22);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+.section-switch-fx {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3800;
+    opacity: 0;
+    will-change: opacity;
+    display: none;
+}
+
+.cinematic-backdrop,
+.cinematic-flash,
+.cinematic-shockwave,
+.cinematic-trail,
+.cinematic-smoke,
+.cinematic-rocket,
+.cinematic-particles {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cinematic-backdrop {
+    inset: 0;
+    left: auto;
+    top: auto;
+    transform: none;
+    background: radial-gradient(circle at center, rgba(255, 170, 75, 0.26), rgba(0, 0, 0, 0.72) 52%, rgba(0, 0, 0, 0.95) 100%);
+}
+
+.cinematic-flash {
+    width: min(58vw, 920px);
+    height: min(58vw, 920px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 245, 222, 0.95) 0%, rgba(255, 181, 112, 0.55) 28%, rgba(255, 124, 56, 0.08) 62%, rgba(255, 124, 56, 0) 80%);
+}
+
+.cinematic-shockwave {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 224, 173, 0.85);
+    box-shadow: 0 0 65px rgba(255, 153, 61, 0.62), inset 0 0 24px rgba(255, 224, 173, 0.4);
+}
+
+.cinematic-trail {
+    width: min(70vw, 980px);
+    height: 22px;
+    transform-origin: center center;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 231, 191, 0.85) 35%, rgba(255, 138, 59, 0.98) 70%, rgba(255, 86, 22, 1));
+    box-shadow: 0 0 44px rgba(255, 138, 0, 0.85);
+}
+
+.cinematic-smoke {
+    width: min(40vw, 540px);
+    height: min(40vw, 540px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 180, 120, 0.55) 0%, rgba(255, 121, 41, 0.2) 38%, rgba(26, 26, 31, 0) 72%);
+    filter: blur(2px);
+}
+
+.cinematic-rocket {
+    font-size: clamp(5rem, 12vw, 10rem);
+    text-shadow: 0 0 36px rgba(255, 201, 135, 0.95), 0 0 80px rgba(255, 121, 34, 0.95);
+    filter: drop-shadow(0 0 24px rgba(255, 140, 56, 0.9));
+}
+
+.cinematic-particles {
+    width: 1px;
+    height: 1px;
+}
+
+.cinematic-particles span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 235, 202, 1) 0%, rgba(255, 132, 39, 0.2) 70%, rgba(255, 132, 39, 0) 100%);
+    transform: translate(-50%, -50%);
+}
+
+.section-switch-fx.is-playing {
+    animation: fxBackdropPulse 0.95s ease-out;
+}
+
+.section-switch-fx.is-playing .cinematic-rocket {
+    animation: fxRocketLaunch 0.95s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.section-switch-fx.is-playing .cinematic-shockwave {
+    animation: fxShockwave 0.95s ease-out;
+}
+
+.section-switch-fx.is-playing .cinematic-trail {
+    animation: fxTrail 0.95s ease-out;
+}
+
+.section-switch-fx.is-playing .cinematic-smoke,
+.section-switch-fx.is-playing .cinematic-flash {
+    animation: fxFlashSmoke 0.95s ease-out;
+}
+
+@keyframes fxBackdropPulse {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes fxRocketLaunch {
+    0% { transform: translate(-50%, -50%) scale(0.15); opacity: 0; }
+    35% { transform: translate(-50%, -50%) scale(1.9); opacity: 1; }
+    100% { transform: translate(-50%, -260%) scale(0.95); opacity: 0; }
+}
+
+@keyframes fxShockwave {
+    0% { transform: translate(-50%, -50%) scale(0.12); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
+}
+
+@keyframes fxTrail {
+    0% { transform: translate(-50%, -50%) scaleX(0.2); opacity: 0; }
+    35% { opacity: 0.95; }
+    100% { transform: translate(-50%, -220%) scaleX(1.2); opacity: 0; }
+}
+
+@keyframes fxFlashSmoke {
+    0% { opacity: 0; }
+    20% { opacity: 0.9; }
+    100% { opacity: 0; }
+}
+
 /* ===== Skills Section ===== */
 .skills {
-    background: var(--bg-darker);
+    background:
+        radial-gradient(circle at 85% 15%, rgba(255, 209, 102, 0.14), transparent 34%),
+        radial-gradient(circle at 12% 78%, rgba(255, 138, 0, 0.12), transparent 33%),
+        var(--bg-darker);
 }
 
 .skills-content {
@@ -968,7 +1189,10 @@ section {
 
 /* ===== Contact Section ===== */
 .contact {
-    background: var(--bg-darker);
+    background:
+        radial-gradient(circle at 12% 18%, rgba(255, 138, 0, 0.14), transparent 36%),
+        radial-gradient(circle at 88% 78%, rgba(255, 90, 42, 0.1), transparent 36%),
+        var(--bg-darker);
 }
 
 .contact-content {
@@ -1159,6 +1383,10 @@ section {
     .contact-info {
         grid-template-columns: 1fr;
     }
+
+    section.section-in-view {
+        transform: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1203,7 +1431,7 @@ section {
 .reveal {
     opacity: 0;
     transform: translateY(50px);
-    transition: all 0.8s ease;
+    transition: opacity 0.62s ease, transform 0.62s ease;
 }
 
 .reveal.active {
@@ -1397,12 +1625,18 @@ section {
         margin-bottom: 0.8rem;
     }
     .work-filters {
+        justify-content: flex-start;
         gap: 0.4rem;
         margin-bottom: 2rem;
+        padding-bottom: 0.25rem;
     }
     .work-filter {
         padding: 0.45rem 1rem;
         font-size: 0.82rem;
+    }
+
+    .work-drive-media {
+        min-height: 180px;
     }
 }
 
